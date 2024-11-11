@@ -21,20 +21,34 @@ from config import settings
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """
+    Handles operations related to user management, such as creating, listing,
+    and viewing user details.
+    """
+
     queryset = UserBase.objects.all()
     serializer_class = UserSerializers
     permission_classes = [UserPermission]
 
     def get_permissions(self):
+        """
+        Returns permissions required for this view.
+        """
         return super().get_permissions()
 
     def get_queryset(self):
+        """
+        Returns users based on their role:
+        - Admin and Superuser roles can see all users.
+        - Other users can only view their own information.
+        """
         user = self.request.user
         if user.role.name in ["Superuser", "Admin"]:
             return UserBase.objects.all()
         return UserBase.objects.filter(id=user.id)
 
     def get_serializer_class(self):
+
         if self.action == "create":
             return UserRegisterSerializer
         if self.action in ["list", "retrieve"]:
@@ -42,6 +56,10 @@ class UserViewSet(viewsets.ModelViewSet):
         return UserSerializers
 
     def create(self, request, *args, **kwargs):
+        """
+        Handles user registration, saving user information and returning a success message.
+        """
+
         user_serializer = self.get_serializer(data=request.data)
         user_serializer.is_valid(raise_exception=True)
         user = user_serializer.save()
@@ -56,12 +74,19 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class RoleViewSet(viewsets.ModelViewSet):
+    """
+    Manages roles and their permissions, including adding, removing, and listing permissions.
+    """
+
     queryset = Role.objects.all()
     serializer_class = RoleSerializers
     permission_classes = [UserPermission]
 
     @action(detail=True, methods=["post"])
     def add_permissions(self, request, pk=None):
+        """
+        Adds specific permissions to a role based on provided permission IDs.
+        """
         role = self.get_object()
         permission_ids = request.data.get("permission_ids", [])
 
@@ -73,6 +98,9 @@ class RoleViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"])
     def remove_permissions(self, request, pk=None):
+        """
+        Removes specific permissions from a role based on provided permission IDs.
+        """
         role = self.get_object()
         permission_ids = request.data.get("permission_ids", [])
 
@@ -84,6 +112,10 @@ class RoleViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["get"])
     def permissions(self, request, pk=None):
+        """
+        Lists all permissions associated with a specific role.
+        """
+
         role = self.get_object()
         permissions = role.permissions.all()
         serializer = PermissionSerializers(permissions, many=True)
@@ -91,16 +123,27 @@ class RoleViewSet(viewsets.ModelViewSet):
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
+    """
+    Handles operations related to permissions, including listing and viewing permissions.
+    """
+
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializers
     permission_classes = [UserPermission]
 
 
 class AuthViewSet(viewsets.ViewSet):
+    """
+    Manages authentication actions, including user login and token refresh.
+    """
+
     permission_classes = [AllowAny]
 
     @action(detail=False, methods=["post"])
     def token(self, request):
+        """
+        Authenticates a user and provides access and refresh tokens upon success.
+        """
 
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -131,6 +174,10 @@ class AuthViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=["post"])
     def refresh(self, request):
+        """
+        Generates a new access token using a valid refresh token.
+        """
+
         serializer = TokenRefreshSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
