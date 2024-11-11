@@ -1,3 +1,4 @@
+import jwt
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -10,11 +11,13 @@ from api.v1.accounts.serializers import (
     LoginSerializer,
     PermissionSerializers,
     RoleSerializers,
+    TokenRefreshSerializer,
     UserDisplaySerializers,
     UserRegisterSerializer,
     UserSerializers,
 )
 from api.v1.accounts.utils import generate_tokens
+from config import settings
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -125,3 +128,40 @@ class AuthViewSet(viewsets.ViewSet):
                 },
             }
         )
+
+    @action(detail=False, methods=["post"])
+    def refresh(self, request):
+        serializer = TokenRefreshSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            refresh_token = serializer.validated_data["refresh_token"]
+            print("Received refresh token:", refresh_token)
+            payload = jwt.decode(
+                refresh_token, settings.SECRET_KEY, algorithms=["HS256"]
+            )
+
+            if payload.get("token_type") != "refresh":
+                raise jwt.InvalidTokenError("Not a refresh token")
+
+            user = UserBase.objects.get(id=payload["user_id"])
+            access_token, new_refresh_token = generate_tokens(user)
+
+            return Response(
+                {"access_token": access_token, "refresh_token": new_refresh_token}
+            )
+
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {"error": "Refresh token has expired"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        except jwt.InvalidTokenError as e:
+            print("Invalid token error:", str(e))
+            return Response(
+                {"error": "Invalid refresh token"}, status=status.HTTP_401_UNAUTHORIZED
+            )
+        except UserBase.DoesNotExist:
+            return Response(
+                {"error": "User does not exist"}, status=status.HTTP_401_UNAUTHORIZED
+            )

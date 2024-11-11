@@ -104,3 +104,7 @@ class UserDisplaySerializers(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+
+
+class TokenRefreshSerializer(serializers.Serializer):
+    refresh_token = serializers.CharField()
