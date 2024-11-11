@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     "rest_framework",
     # app modules .
     "api.v1.accounts",
-    "api.v1.auths",
 ]
 
 MIDDLEWARE = [
@@ -56,11 +55,11 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
-        "api.v1.auths.authentications.JWTAuthentication",
+        "api.v1.accounts.authentications.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
-        "api.v1.auths.permissions.UserPermission",
+        "api.v1.accounts.permissions.UserPermission",
     ),
 }
 

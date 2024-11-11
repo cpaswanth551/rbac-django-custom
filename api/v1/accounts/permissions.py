@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission
 
-from api.v1.accounts.models import RoleHasPermission, UserBase
+from api.v1.accounts.models import UserBase
 
 
 class UserPermission(BasePermission):
@@ -14,7 +14,6 @@ class UserPermission(BasePermission):
     }
 
     def has_permission(self, request, view):
-        print("permission is called")
         user = request.user
         if (
             view.action == "create"
