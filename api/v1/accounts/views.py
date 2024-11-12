@@ -1,7 +1,7 @@
 import jwt
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import action
 from django.contrib.auth import authenticate
 
@@ -120,8 +120,8 @@ class PermissionViewSet(viewsets.ModelViewSet):
 
 
 @extend_schema_view(
-    token=extend_schema(tags=["Auth"]),
-    refresh=extend_schema(tags=["Auth"]),
+    token=extend_schema(tags=["Auth"], request=LoginSerializer),
+    refresh=extend_schema(tags=["Auth"],request=TokenRefreshSerializer),
 )
 class AuthViewSet(viewsets.ViewSet):
     """

@@ -6,7 +6,6 @@ from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
 )
-from django.contrib.contenttypes.models import ContentType
 
 
 class Permission(models.Model):
