@@ -39,8 +39,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """
         Returns users based on their role:
-        - Admin and Superuser roles can see all users.
-        - Other users can only view their own information.
+
         """
         user = self.request.user
         if user.role.name in ["Superuser", "Admin"]:

@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
     # app modules .
     "api.v1.accounts",
 ]
@@ -61,11 +63,21 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
         "api.v1.accounts.permissions.UserPermission",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "MEDWB",
+    "DESCRIPTION": "MEDWB..",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",  
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+}
 
 DATABASES = {
     "default": {

@@ -139,3 +139,4 @@ class DummyViewSet(ModelViewSet):
 def view_set():
     """Provides an instance of the DummyViewSet for testing."""
     return DummyViewSet()
+

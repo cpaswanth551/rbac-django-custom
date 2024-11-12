@@ -1,0 +1,792 @@
+openapi: 3.0.3
+info:
+  title: MEDWB
+  version: 1.0.0
+  description: MEDWB..
+paths:
+  /api/v1/accounts/permission/:
+    get:
+      operationId: permission_list
+      description: Handles operations related to permissions, including listing and
+        viewing permissions.
+      tags:
+      - permission
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionSerializers'
+          description: ''
+    post:
+      operationId: permission_create
+      description: Handles operations related to permissions, including listing and
+        viewing permissions.
+      tags:
+      - permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermissionSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PermissionSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PermissionSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionSerializers'
+          description: ''
+  /api/v1/accounts/permission/{id}/:
+    get:
+      operationId: permission_retrieve
+      description: Handles operations related to permissions, including listing and
+        viewing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this permission.
+        required: true
+      tags:
+      - permission
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionSerializers'
+          description: ''
+    put:
+      operationId: permission_update
+      description: Handles operations related to permissions, including listing and
+        viewing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this permission.
+        required: true
+      tags:
+      - permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermissionSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PermissionSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PermissionSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionSerializers'
+          description: ''
+    patch:
+      operationId: permission_partial_update
+      description: Handles operations related to permissions, including listing and
+        viewing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this permission.
+        required: true
+      tags:
+      - permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPermissionSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPermissionSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPermissionSerializers'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionSerializers'
+          description: ''
+    delete:
+      operationId: permission_destroy
+      description: Handles operations related to permissions, including listing and
+        viewing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this permission.
+        required: true
+      tags:
+      - permission
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/accounts/refresh/:
+    post:
+      operationId: refresh_create
+      description: Generates a new access token using a valid refresh token.
+      tags:
+      - refresh
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/accounts/roles/:
+    get:
+      operationId: roles_list
+      description: Manages roles and their permissions, including adding, removing,
+        and listing permissions.
+      tags:
+      - roles
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+    post:
+      operationId: roles_create
+      description: Manages roles and their permissions, including adding, removing,
+        and listing permissions.
+      tags:
+      - roles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+  /api/v1/accounts/roles/{id}/:
+    get:
+      operationId: roles_retrieve
+      description: Manages roles and their permissions, including adding, removing,
+        and listing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this role.
+        required: true
+      tags:
+      - roles
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+    put:
+      operationId: roles_update
+      description: Manages roles and their permissions, including adding, removing,
+        and listing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this role.
+        required: true
+      tags:
+      - roles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+    patch:
+      operationId: roles_partial_update
+      description: Manages roles and their permissions, including adding, removing,
+        and listing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this role.
+        required: true
+      tags:
+      - roles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRoleSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRoleSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRoleSerializers'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+    delete:
+      operationId: roles_destroy
+      description: Manages roles and their permissions, including adding, removing,
+        and listing permissions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this role.
+        required: true
+      tags:
+      - roles
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/accounts/roles/{id}/add_permissions/:
+    post:
+      operationId: roles_add_permissions_create
+      description: Adds specific permissions to a role based on provided permission
+        IDs.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this role.
+        required: true
+      tags:
+      - roles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+  /api/v1/accounts/roles/{id}/permissions/:
+    get:
+      operationId: roles_permissions_retrieve
+      description: Lists all permissions associated with a specific role.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this role.
+        required: true
+      tags:
+      - roles
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+  /api/v1/accounts/roles/{id}/remove_permissions/:
+    post:
+      operationId: roles_remove_permissions_create
+      description: Removes specific permissions from a role based on provided permission
+        IDs.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this role.
+        required: true
+      tags:
+      - roles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RoleSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleSerializers'
+          description: ''
+  /api/v1/accounts/token/:
+    post:
+      operationId: token_create
+      description: Authenticates a user and provides access and refresh tokens upon
+        success.
+      tags:
+      - token
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/accounts/users/:
+    get:
+      operationId: users_list
+      description: |-
+        Handles operations related to user management, such as creating, listing,
+        and viewing user details.
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDisplaySerializers'
+          description: ''
+    post:
+      operationId: users_create
+      description: Handles user registration, saving user information and returning
+        a success message.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegister'
+          description: ''
+  /api/v1/accounts/users/{id}/:
+    get:
+      operationId: users_retrieve
+      description: |-
+        Handles operations related to user management, such as creating, listing,
+        and viewing user details.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDisplaySerializers'
+          description: ''
+    put:
+      operationId: users_update
+      description: |-
+        Handles operations related to user management, such as creating, listing,
+        and viewing user details.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSerializers'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      description: |-
+        Handles operations related to user management, such as creating, listing,
+        and viewing user details.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSerializers'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSerializers'
+          description: ''
+    delete:
+      operationId: users_destroy
+      description: |-
+        Handles operations related to user management, such as creating, listing,
+        and viewing user details.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    PatchedPermissionSerializers:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        codename:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+    PatchedRoleSerializers:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionSerializers'
+          readOnly: true
+        permission_ids:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+    PatchedUserSerializers:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          maxLength: 128
+        role:
+          type: integer
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 15
+    PermissionSerializers:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        codename:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+      required:
+      - codename
+      - id
+      - name
+    RoleDisplaySerializers:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - name
+    RoleSerializers:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionSerializers'
+          readOnly: true
+        permission_ids:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+      required:
+      - name
+      - permissions
+    UserDisplaySerializers:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          maxLength: 128
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleDisplaySerializers'
+          readOnly: true
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 15
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - email
+      - id
+      - password
+      - role
+    UserRegister:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          maxLength: 128
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 15
+      required:
+      - email
+      - password
+    UserSerializers:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          maxLength: 128
+        role:
+          type: integer
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 15
+      required:
+      - email
+      - password
+      - role
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
