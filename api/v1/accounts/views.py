@@ -20,6 +20,17 @@ from api.v1.accounts.utils import generate_tokens
 from config import settings
 
 
+from drf_spectacular.utils import extend_schema, extend_schema_view
+
+
+@extend_schema_view(
+    list=extend_schema(tags=["Users"]),
+    retrieve=extend_schema(tags=["Users"]),
+    create=extend_schema(tags=["Users"]),
+    update=extend_schema(tags=["Users"]),
+    partial_update=extend_schema(tags=["Users"]),
+    destroy=extend_schema(tags=["Users"]),
+)
 class UserViewSet(viewsets.ModelViewSet):
     """
     API Endpont handles operations related to user management, such as creating, listing,
@@ -72,6 +83,14 @@ class UserViewSet(viewsets.ModelViewSet):
         )
 
 
+@extend_schema_view(
+    list=extend_schema(tags=["Roles"]),
+    retrieve=extend_schema(tags=["Roles"]),
+    create=extend_schema(tags=["Roles"]),
+    update=extend_schema(tags=["Roles"]),
+    partial_update=extend_schema(tags=["Roles"]),
+    destroy=extend_schema(tags=["Roles"]),
+)
 class RoleViewSet(viewsets.ModelViewSet):
     """
     API Endpont manages roles and their permissions, including adding, removing, and listing permissions.
@@ -82,6 +101,14 @@ class RoleViewSet(viewsets.ModelViewSet):
     permission_classes = [UserPermission]
 
 
+@extend_schema_view(
+    list=extend_schema(tags=["Permissions"]),
+    retrieve=extend_schema(tags=["Permissions"]),
+    create=extend_schema(tags=["Permissions"]),
+    update=extend_schema(tags=["Permissions"]),
+    partial_update=extend_schema(tags=["Permissions"]),
+    destroy=extend_schema(tags=["Permissions"]),
+)
 class PermissionViewSet(viewsets.ModelViewSet):
     """
     API Endpont handles operations related to permissions, including listing and viewing permissions.
@@ -92,6 +119,10 @@ class PermissionViewSet(viewsets.ModelViewSet):
     permission_classes = [UserPermission]
 
 
+@extend_schema_view(
+    token=extend_schema(tags=["Auth"]),
+    refresh=extend_schema(tags=["Auth"]),
+)
 class AuthViewSet(viewsets.ViewSet):
     """
     API Endpont manages authentication actions, including user login and token refresh.
