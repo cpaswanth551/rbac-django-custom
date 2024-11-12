@@ -22,7 +22,7 @@ from config import settings
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    Handles operations related to user management, such as creating, listing,
+    API Endpont handles operations related to user management, such as creating, listing,
     and viewing user details.
     """
 
@@ -32,13 +32,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         """
-        Returns permissions required for this view.
+        API Endpont returns permissions required for this view.
         """
         return super().get_permissions()
 
     def get_queryset(self):
         """
-        Returns users based on their role:
+        API Endpont returns users based on their role:
 
         """
         user = self.request.user
@@ -56,7 +56,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """
-        Handles user registration, saving user information and returning a success message.
+        API Endpont handles user registration, saving user information and returning a success message.
         """
 
         user_serializer = self.get_serializer(data=request.data)
@@ -74,56 +74,17 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class RoleViewSet(viewsets.ModelViewSet):
     """
-    Manages roles and their permissions, including adding, removing, and listing permissions.
+    API Endpont manages roles and their permissions, including adding, removing, and listing permissions.
     """
 
     queryset = Role.objects.all()
     serializer_class = RoleSerializers
     permission_classes = [UserPermission]
 
-    @action(detail=True, methods=["post"])
-    def add_permissions(self, request, pk=None):
-        """
-        Adds specific permissions to a role based on provided permission IDs.
-        """
-        role = self.get_object()
-        permission_ids = request.data.get("permission_ids", [])
-
-        permissions = Permission.objects.filter(id__in=permission_ids)
-        role.permissions.add(*permissions)
-
-        serializer = self.get_serializer(role)
-        return Response(serializer.data)
-
-    @action(detail=True, methods=["post"])
-    def remove_permissions(self, request, pk=None):
-        """
-        Removes specific permissions from a role based on provided permission IDs.
-        """
-        role = self.get_object()
-        permission_ids = request.data.get("permission_ids", [])
-
-        permissions = Permission.objects.filter(id__in=permission_ids)
-        role.permissions.remove(*permissions)
-
-        serializer = self.get_serializer(role)
-        return Response(serializer.data)
-
-    @action(detail=True, methods=["get"])
-    def permissions(self, request, pk=None):
-        """
-        Lists all permissions associated with a specific role.
-        """
-
-        role = self.get_object()
-        permissions = role.permissions.all()
-        serializer = PermissionSerializers(permissions, many=True)
-        return Response(serializer.data)
-
 
 class PermissionViewSet(viewsets.ModelViewSet):
     """
-    Handles operations related to permissions, including listing and viewing permissions.
+    API Endpont handles operations related to permissions, including listing and viewing permissions.
     """
 
     queryset = Permission.objects.all()
@@ -133,7 +94,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
 
 class AuthViewSet(viewsets.ViewSet):
     """
-    Manages authentication actions, including user login and token refresh.
+    API Endpont manages authentication actions, including user login and token refresh.
     """
 
     permission_classes = [AllowAny]
